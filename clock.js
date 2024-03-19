@@ -14,24 +14,30 @@ function draw_clock(obj) {
   background(50); //  beige
   fill(200); // dark grey
 
+  // Sets origin point to centre of display
   translate(width/2, height/2);
   angleMode(DEGREES);
 
+  // Assigns time objects to variables
   let Seconds = obj.seconds;
   let Minutes = obj.minutes;
   let Hours = obj.hours;
   let Milliseconds = obj.millis;
   let Alarm =  obj.seconds_until_alarm;
 
+  // Basic Clock in middle (Replace with values on radar blips?)
   var h = nf(Hours, 2, 0);
   var m = nf(Minutes, 2, 0);
   var s = nf(Seconds, 2, 0);
   textSize(20);
   text(h+' : '+m+' : '+s,-50,40);
 
+
+
+  // Seconds Blip, controlling position and transparency
   push();
-  	var triggerposition = map(Seconds, 0,60,0,1000)
-    var transparency = map(((millis()-triggerposition)%1000),0,1000,0,255)
+  	var secondsBlipPosition = map(Seconds, 0,60,0,1000)
+    var transparency = map(((millis()-secondsBlipPosition)%1000),0,1000,0,255)
   	var secondAngle = map(Seconds,0,60,0,360)
 		var secondLength = 200;
 
@@ -45,12 +51,12 @@ function draw_clock(obj) {
 	  pop();
 	pop();
 
+  // Minutes Blip, controlling position and transparency
   push();
-  var triggerposition = map(Minutes, 0,60,0,1000)
-  var transparency = map(((millis()-triggerposition)%1000),0,1000,0,255)
+  var minutesBlipPosition = map(Minutes, 0,60,0,1000)
+  var transparency = map(((millis()-minutesBlipPosition)%1000),0,1000,0,255)
   var minuteAngle = map(Minutes,0,60,0,360)
   var minuteLength = 185;
-
 
   rotate(minuteAngle);
   
@@ -62,11 +68,10 @@ function draw_clock(obj) {
   pop();
 pop();
 
-
-
+// Hours Blip, controlling position and transparency
   push();
-  var triggerposition = map(Hours % 12, 0,12,0,1000)
-  var transparency = map(((millis()-triggerposition)%1000),0,1000,0,255)
+  var hoursBlipPosition = map(Hours % 12, 0,12,0,1000)
+  var transparency = map(((millis()-hoursBlipPosition)%1000),0,1000,0,255)
   var hourAngle = map(Hours % 12,0,12,0,360)
   var hourLength = 145;
   stroke(39, 203, 164);
@@ -81,6 +86,8 @@ pop();
   pop();
 pop();
 
+
+// Spinning Radar Arm, controlling angle and speed
   push();
   var spinningArmAngle = map(Milliseconds, 0, 1000, 0, 360);
   var armLength = 225;
@@ -88,7 +95,7 @@ pop();
   line(0,0,0,-armLength);
   pop();
 
-
+  // Green radar rings
   noFill();
   stroke(0, 255, 0);
   strokeWeight(3);
