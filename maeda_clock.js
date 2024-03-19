@@ -24,4 +24,5 @@ function draw_clock(obj) {
   translate(20, 10);
   textSize(160);
   text("4", 0, 0);
+
 }
