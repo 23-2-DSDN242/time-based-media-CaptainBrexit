@@ -14,8 +14,10 @@ function draw_clock(obj) {
   background(50); //  beige
   fill(200); // dark grey
 
+  //let Colour = color(0, 255, 0);
+
   // Sets origin point to centre of display
-  translate(width/2, height/2);
+  translate(width / 2, height / 2);
   angleMode(DEGREES);
 
   // Assigns time objects to variables
@@ -30,22 +32,22 @@ function draw_clock(obj) {
   var m = nf(Minutes, 2, 0);
   var s = nf(Seconds, 2, 0);
   textSize(20);
-  text(h+' : '+m+' : '+s,-50,40);
+  text(h + ' : ' + m + ' : ' + s, - 50, 40);
 
 
 
   // Seconds Blip, controlling position and transparency
   push();
-  	var secondsBlipPosition = map(Seconds, 0,60,0,1000)
-    var transparency = map(((millis()-secondsBlipPosition)%1000),0,1000,0,255)
-  	var secondAngle = map(Seconds,0,60,0,360)
+  	var secondsBlipPosition = map(Seconds, 0 , 60, 0, 1000);
+    var transparency = map(((millis()-secondsBlipPosition) % 1000), 0, 1000, 0, 255);
+  	var secondAngle = map(Seconds, 0, 60, 0, 360);
 		var secondLength = 200;
 
 		rotate(secondAngle);
   	
 	  noStroke();
 	  push();
-      translate(0,-secondLength);
+      translate(0, - secondLength);
       fill(0, 255, 0, transparency);
       circle(0, 0, 20);
 	  pop();
@@ -53,16 +55,16 @@ function draw_clock(obj) {
 
   // Minutes Blip, controlling position and transparency
   push();
-  var minutesBlipPosition = map(Minutes, 0,60,0,1000)
-  var transparency = map(((millis()-minutesBlipPosition)%1000),0,1000,0,255)
-  var minuteAngle = map(Minutes,0,60,0,360)
-  var minuteLength = 185;
+  var minutesBlipPosition = map(Minutes, 0, 60, 0, 1000);
+  var transparency = map(((millis()-minutesBlipPosition) % 1000), 0, 1000, 0, 255);
+  var minuteAngle = map(Minutes, 0, 60, 0, 360);
+  var minuteLength = 150;
 
   rotate(minuteAngle);
   
   noStroke();
   push();
-    translate(0,-minuteLength*0.8);
+    translate(0, - minuteLength);
     fill(0, 255, 0, transparency);
     circle(0, 0, 20);
   pop();
@@ -70,17 +72,17 @@ pop();
 
 // Hours Blip, controlling position and transparency
   push();
-  var hoursBlipPosition = map(Hours % 12, 0,12,0,1000)
-  var transparency = map(((millis()-hoursBlipPosition)%1000),0,1000,0,255)
-  var hourAngle = map(Hours % 12,0,12,0,360)
-  var hourLength = 145;
+  var hoursBlipPosition = map(Hours % 12, 0, 12, 0, 1000);
+  var transparency = map(((millis()-hoursBlipPosition) % 1000), 0, 1000, 0, 255);
+  var hourAngle = map(Hours % 12, 0, 12, 0, 360);
+  var hourLength = 100;
   stroke(39, 203, 164);
   
   rotate(hourAngle);
   
   noStroke();
   push();
-    translate(0,-hourLength*0.7);
+    translate(0, - hourLength);
     fill(0, 255, 0, transparency);
     circle(0, 0, 20);
   pop();
@@ -92,7 +94,7 @@ pop();
   var spinningArmAngle = map(Milliseconds, 0, 1000, 0, 360);
   var armLength = 225;
   rotate(spinningArmAngle);
-  line(0,0,0,-armLength);
+  line(0,0,0, - armLength);
   pop();
 
   // Green radar rings
@@ -106,4 +108,34 @@ pop();
   fill(0, 255, 0);
   circle(0, 0, 25);
 
+
+
+  // When alarm is triggered, change clock colour to red
+  //if (Alarm >= 0) {
+    if (Alarm != 0) {
+    //text ("Alarm not triggered", 100, 100);
+  //} else if (Alarm == -1) {
+  } else {
+    textSize(30);
+    push();
+    rotate(-40);
+    text ("OH MY GOD", -270, -350);
+    pop();
+
+    push();
+    rotate(40);
+    text ("THERE'S SOMETHING", -300, 300);
+    text ("ON THE RADAR", -270, 330);
+    pop();
+
+    push();
+    rotate(40);
+    text ("AAAAAAAAAAAAA", 75, -300);
+    pop();
+
+    push();
+    rotate(-40);
+    text ("PANIC", 75, 350);
+    pop();
+  }
 }
