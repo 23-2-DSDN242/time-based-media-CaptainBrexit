@@ -2,23 +2,14 @@
  * use p5.js to draw a clock on a 960x500 canvas
  */
 function draw_clock(obj) {
-  // draw your own clock here based on the values of obj:
-  //    obj.hours goes from 0-23
-  //    obj.minutes goes from 0-59
-  //    obj.seconds goes from 0-59
-  //    obj.millis goes from 0-999
-  //    obj.seconds_until_alarm is:
-  //        < 0 if no alarm is set
-  //        = 0 if the alarm is currently going off
-  //        > 0 --> the number of seconds until alarm should go off
-  background(50); //  beige
-  fill(200); // dark grey
+  background(50); 
+  fill(200); 
 
-  //let Colour = color(0, 255, 0);
 
   // Sets origin point to centre of display
   translate(width / 2, height / 2);
   angleMode(DEGREES);
+
 
   // Assigns time objects to variables
   let Seconds = obj.seconds;
@@ -27,6 +18,7 @@ function draw_clock(obj) {
   let Milliseconds = obj.millis;
   let Alarm =  obj.seconds_until_alarm;
 
+
   // Basic Clock in middle (Replace with values on radar blips?)
   var h = nf(Hours, 2, 0);
   var m = nf(Minutes, 2, 0);
@@ -34,6 +26,8 @@ function draw_clock(obj) {
   textSize(20);
   text(h + ' : ' + m + ' : ' + s, - 50, 40);
 
+
+  // Draws the darker background grid
   for (x = -width; x < width; x += width / 10) {
 		for (y = -height; y < height; y += height / 5) {
       stroke(0, 127, 0);
@@ -42,10 +36,11 @@ function draw_clock(obj) {
 		}
 	}
 
+
   // Seconds Blip, controlling position and transparency
   push();
   	var secondsBlipPosition = map(Seconds, 0 , 60, 0, 1000);
-    var transparency = map(((millis()-secondsBlipPosition) % 1000), 0, 1000, 0, 255);
+    var transparency = map(((millis()-secondsBlipPosition) % 1000), 0, 1000, 255, 0);
   	var secondAngle = map(Seconds, 0, 60, 0, 360);
 		var secondLength = 200;
 
@@ -59,10 +54,11 @@ function draw_clock(obj) {
 	  pop();
 	pop();
 
+
   // Minutes Blip, controlling position and transparency
   push();
   var minutesBlipPosition = map(Minutes, 0, 60, 0, 1000);
-  var transparency = map(((millis()-minutesBlipPosition) % 1000), 0, 1000, 0, 255);
+  var transparency = map(((millis()-minutesBlipPosition) % 1000), 0, 1000, 255, 0);
   var minuteAngle = map(Minutes, 0, 60, 0, 360);
   var minuteLength = 150;
 
@@ -76,10 +72,11 @@ function draw_clock(obj) {
   pop();
 pop();
 
+
 // Hours Blip, controlling position and transparency
   push();
   var hoursBlipPosition = map(Hours % 12, 0, 12, 0, 1000);
-  var transparency = map(((millis()-hoursBlipPosition) % 1000), 0, 1000, 0, 255);
+  var transparency = map(((millis()-hoursBlipPosition) % 1000), 0, 1000, 255, 0);
   var hourAngle = map(Hours % 12, 0, 12, 0, 360);
   var hourLength = 100;
   stroke(39, 203, 164);
@@ -96,6 +93,8 @@ pop();
 
 
 // Spinning Radar Arm, controlling angle and speed
+  stroke(0, 255, 0);
+  strokeWeight(3);
   push();
   var spinningArmAngle = map(Milliseconds, 0, 1000, 0, 360);
   var armLength = 225;
@@ -103,10 +102,9 @@ pop();
   line(0,0,0, - armLength);
   pop();
 
+
   // Green radar rings and lines
   noFill();
-  stroke(0, 255, 0);
-  strokeWeight(3);
   circle(0, 0, 450);
   circle(0, 0, 350);
   circle(0, 0, 250);
@@ -116,16 +114,18 @@ pop();
   line(-235, 0, 235, 0);
 
   
-
-
-
-  // When alarm is triggered, change clock colour to red
-  //if (Alarm >= 0) {
+  // When alarm is triggered, display alarm text and alternate colours between red and green
     if (Alarm != 0) {
-    //text ("Alarm not triggered", 100, 100);
-  //} else if (Alarm == -1) {
   } else {
+    if(Milliseconds < 999 / 2 ) {
+      fill(0, 255, 0);
+    } else {
+      fill(255, 0, 0);
+      stroke(255, 0, 0);
+    }
+
     textSize(30);
+    
     push();
     rotate(-40);
     text ("OH MY GOD", -270, -350);
