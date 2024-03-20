@@ -34,7 +34,13 @@ function draw_clock(obj) {
   textSize(20);
   text(h + ' : ' + m + ' : ' + s, - 50, 40);
 
-
+  for (x = -width; x < width; x += width / 10) {
+		for (y = -height; y < height; y += height / 5) {
+      stroke(0, 127, 0);
+			line(x, -height, x, height);
+			line(-width, y, width, y);
+		}
+	}
 
   // Seconds Blip, controlling position and transparency
   push();
@@ -97,7 +103,7 @@ pop();
   line(0,0,0, - armLength);
   pop();
 
-  // Green radar rings
+  // Green radar rings and lines
   noFill();
   stroke(0, 255, 0);
   strokeWeight(3);
@@ -105,8 +111,11 @@ pop();
   circle(0, 0, 350);
   circle(0, 0, 250);
   circle(0, 0, 150);
-  fill(0, 255, 0);
   circle(0, 0, 25);
+  line(0, -235, 0, 235);
+  line(-235, 0, 235, 0);
+
+  
 
 
 
