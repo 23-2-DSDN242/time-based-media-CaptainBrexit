@@ -30,7 +30,11 @@ function draw_clock(obj) {
   // Draws the darker background grid
   for (x = -width; x < width; x += width / 10) {
 		for (y = -height; y < height; y += height / 5) {
-      stroke(0, 127, 0);
+      if (Alarm != 0) {
+        stroke (0, 127, 0);
+      } else {
+        stroke (127, 0, 0);
+      }
 			line(x, -height, x, height);
 			line(-width, y, width, y);
 		}
@@ -40,7 +44,7 @@ function draw_clock(obj) {
   // Seconds Blip, controlling position and transparency
   push();
   	var secondsBlipPosition = map(Seconds, 0 , 60, 0, 1000);
-    var transparency = map(((millis()-secondsBlipPosition) % 1000), 0, 1000, 255, 0);
+    var transparency = map(((millis() - secondsBlipPosition) % 1000), 0, 1000, 255, 0);
   	var secondAngle = map(Seconds, 0, 60, 0, 360);
 		var secondLength = 200;
 
@@ -49,7 +53,11 @@ function draw_clock(obj) {
 	  noStroke();
 	  push();
       translate(0, - secondLength);
+      if (Alarm != 0) {
       fill(0, 255, 0, transparency);
+      } else {
+        fill (255, 0, 0, transparency);
+      }
       circle(0, 0, 20);
 	  pop();
 	pop();
@@ -58,7 +66,7 @@ function draw_clock(obj) {
   // Minutes Blip, controlling position and transparency
   push();
   var minutesBlipPosition = map(Minutes, 0, 60, 0, 1000);
-  var transparency = map(((millis()-minutesBlipPosition) % 1000), 0, 1000, 255, 0);
+  var transparency = map(((millis() - minutesBlipPosition) % 1000), 0, 1000, 255, 0);
   var minuteAngle = map(Minutes, 0, 60, 0, 360);
   var minuteLength = 150;
 
@@ -67,7 +75,11 @@ function draw_clock(obj) {
   noStroke();
   push();
     translate(0, - minuteLength);
+    if (Alarm != 0) {
     fill(0, 255, 0, transparency);
+    } else {
+      fill (255, 0, 0, transparency);
+    }
     circle(0, 0, 20);
   pop();
 pop();
@@ -76,24 +88,35 @@ pop();
 // Hours Blip, controlling position and transparency
   push();
   var hoursBlipPosition = map(Hours % 12, 0, 12, 0, 1000);
-  var transparency = map(((millis()-hoursBlipPosition) % 1000), 0, 1000, 255, 0);
+  var transparency = map(((millis() - hoursBlipPosition) % 1000), 0, 1000, 255, 0);
   var hourAngle = map(Hours % 12, 0, 12, 0, 360);
   var hourLength = 100;
-  stroke(39, 203, 164);
   
   rotate(hourAngle);
   
   noStroke();
   push();
     translate(0, - hourLength);
+    if (Alarm != 0) {
     fill(0, 255, 0, transparency);
+    } else {
+      fill (255, 0, 0, transparency);
+    }
     circle(0, 0, 20);
   pop();
 pop();
 
 
 // Spinning Radar Arm, controlling angle and speed
-  stroke(0, 255, 0);
+    if (Alarm != 0) {
+      stroke(0, 255, 0);
+      } else {
+        if(Milliseconds < 999 / 2 ) {
+          stroke(0, 255, 0);
+        } else {
+          stroke(255, 0, 0);
+        }
+      }
   strokeWeight(3);
   push();
   var spinningArmAngle = map(Milliseconds, 0, 1000, 0, 360);
@@ -125,7 +148,7 @@ pop();
     }
 
     textSize(30);
-    
+
     push();
     rotate(-40);
     text ("OH MY GOD", -270, -350);
