@@ -23,6 +23,7 @@ function draw_clock(obj) {
   var h = nf(Hours, 2, 0);
   var m = nf(Minutes, 2, 0);
   var s = nf(Seconds, 2, 0);
+  stroke(0);
   textSize(20);
   text(h + ' : ' + m + ' : ' + s, - 50, 40);
 
